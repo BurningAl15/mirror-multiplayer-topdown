@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/.idea.PVPAliens.iml
+/contentModel.xml
+# Datasource local storage ignored files
+/../../../../../../../../:\VideogameDevelopment\Unity Projects\LearningProjects\PVPAliens\.idea\.idea.PVPAliens\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
