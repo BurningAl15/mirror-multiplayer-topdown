@@ -11,11 +11,6 @@ namespace inart.TopDown2D
 
         public float bulletForce = 20f;
         int index=0;
-        void Update()
-        {
-            if (Input.GetButtonDown("Fire1"))
-                Shoot();
-        }
 
         //Thinking in two shootpoints (right and left)
         void Shoot()
@@ -25,5 +20,12 @@ namespace inart.TopDown2D
             rgb.AddForce(firePoints[index % 2 == 0 ? 0 : 1].up * bulletForce, ForceMode2D.Impulse);
             index++;
         }
+
+        public void ShootAction()
+        {
+            if (Input.GetButtonDown("Fire1"))
+                Shoot();
+        }
+        
     }
 }

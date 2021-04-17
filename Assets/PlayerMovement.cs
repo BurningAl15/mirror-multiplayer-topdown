@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Mirror;
+
 
 namespace inart.TopDown2D
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : NetworkBehaviour
     {
         [FormerlySerializedAs("canMove")] [SerializeField] private bool cantMove;
         public float moveSpeed = 5f;
@@ -24,6 +27,13 @@ namespace inart.TopDown2D
 
         private Vector2 _direction;
 
+        [SerializeField] private Shooting _shooting;
+
+        private void Awake()
+        {
+            cam = Camera.main;
+        }
+
         void Update()
         {
             if (knockBackCounter <= 0)
@@ -31,7 +41,11 @@ namespace inart.TopDown2D
                 if (!cantMove)
                 {
                     //Horizontal Movement
-                    Movement();
+                    if (isLocalPlayer)
+                    {
+                        Movement_Input();
+                        _shooting.ShootAction();
+                    }
                 }
             }
             else
@@ -41,7 +55,7 @@ namespace inart.TopDown2D
             }
         }
 
-        void Movement()
+        void Movement_Input()
         {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
@@ -53,12 +67,20 @@ namespace inart.TopDown2D
         {
             if (knockBackCounter <= 0)
             {
-                rgb.MovePosition(rgb.position + movement * moveSpeed * Time.fixedDeltaTime);
-
-                Vector2 lookdir = mousePos - rgb.position;
-                float angle = Mathf.Atan2(lookdir.y,lookdir.x)*Mathf.Rad2Deg - 90f;
-                rgb.rotation = angle;
+                if (isLocalPlayer)
+                {
+                    Rotate();
+                }
             }
+        }
+
+        void Rotate()
+        {
+            rgb.MovePosition(rgb.position + movement * moveSpeed * Time.fixedDeltaTime);
+
+            Vector2 lookdir = mousePos - rgb.position;
+            float angle = Mathf.Atan2(lookdir.y,lookdir.x)*Mathf.Rad2Deg - 90f;
+            rgb.rotation = angle;
         }
         
         public void KnockBack(Vector2 targetPos)
