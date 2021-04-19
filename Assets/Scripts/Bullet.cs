@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 namespace inart.TopDown2D
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet : NetworkBehaviour
     {
         public GameObject hitEffect;
 
+        [SerializeField] private Rigidbody2D rgb;
         private PlayerMovement temp;
         // private void OnCollisionEnter2D(Collision2D collision)
         // {
@@ -20,7 +22,14 @@ namespace inart.TopDown2D
         //         Destroy(this.gameObject);
         //     }
         // }
+        
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            // rgb.simulated = true;
+        }
 
+        // [ServerCallback]
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))

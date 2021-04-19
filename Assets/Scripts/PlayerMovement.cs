@@ -38,14 +38,11 @@ namespace inart.TopDown2D
         {
             if (knockBackCounter <= 0)
             {
-                if (!cantMove)
+                //Horizontal Movement
+                if (isLocalPlayer)
                 {
-                    //Horizontal Movement
-                    if (isLocalPlayer)
-                    {
-                        Movement_Input();
-                        _shooting.ShootAction();
-                    }
+                    Movement_Input();
+                    _shooting.ShootAction();
                 }
             }
             else
@@ -65,13 +62,11 @@ namespace inart.TopDown2D
         
         private void FixedUpdate()
         {
-            if (knockBackCounter <= 0)
-            {
-                if (isLocalPlayer)
+                if (knockBackCounter <= 0)
                 {
-                    Rotate();
+                    if (isLocalPlayer)
+                        Rotate();
                 }
-            }
         }
 
         void Rotate()

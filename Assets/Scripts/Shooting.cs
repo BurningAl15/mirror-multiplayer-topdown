@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 namespace inart.TopDown2D
 {
-    public class Shooting : MonoBehaviour
+    public class Shooting : NetworkBehaviour
     {
         public Transform[] firePoints=new Transform[2];
         public GameObject bulletPrefab;
@@ -26,6 +27,5 @@ namespace inart.TopDown2D
             if (Input.GetButtonDown("Fire1"))
                 Shoot();
         }
-        
     }
 }
